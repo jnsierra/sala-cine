@@ -37,6 +37,11 @@ public class LoginMB extends BaseMB implements Serializable{
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("dataSession", getUsuario());
 		return "inicio.jsf";
 	}
+	
+	public String logout() {
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		return "index.jsf";
+	}
 
 	public UsuarioEntity getUsuario() {
 		return usuario;

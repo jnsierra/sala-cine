@@ -16,7 +16,7 @@ public interface IMapaCineEjb {
 	 * @param fila
 	 * @param silla
 	 */
-	void cambiaEstadoSilla(Long fila, Long silla, String cliente, String usuario);
+	void cambiaEstadoSilla(Long fila, Long silla, String cliente, String usuario, Integer asientos);
 	
 	
 }

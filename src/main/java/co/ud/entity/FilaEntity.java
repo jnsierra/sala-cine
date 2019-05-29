@@ -19,7 +19,7 @@ public class FilaEntity {
 	 * Metodo con el cual inicializo las sillas de cada fila 
 	 */
 	private void defaultSillas() {
-		for(int i = 0; i < 20 ; i++) {
+		for(int i = 0; i < 10 ; i++) {
 			SillaEntity silla = SillaEntity.of();
 			silla.setNumerSilla(Long.valueOf(i));
 			getSillas().add(silla);

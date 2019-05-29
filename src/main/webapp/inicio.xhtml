@@ -13,8 +13,10 @@
 	<h:form>
 		<p:growl id="mensajes" autoUpdate="true" showDetail="true" showSummary="true"></p:growl>
 		Usuario Logeado: <h:outputLabel value="#{inicioMB.usuario.user}"></h:outputLabel>
+		<h:commandLink value="Cerrar Sesión" action="#{loginMB.logout}" immediate="true"></h:commandLink>
 		<br />
-		Digite el cliente: <h:inputText value="#{inicioMB.cliente}" required="true" requiredMessage="Cliente Obligatorio"></h:inputText>
+		Digite el cliente: <h:inputText value="#{inicioMB.cliente}" required="true" requiredMessage="Cliente Obligatorio"></h:inputText><br/>
+		Asientos: <h:inputText value="#{inicioMB.asientos}" required="true" requiredMessage="El número de asientos es obligatorio"></h:inputText>
 		<br />
 		<br />
 		<div class="container alert alert-danger">
@@ -29,7 +31,7 @@
 						<div class="col-sm">
 							<p:commandLink actionListener="#{inicioMB.cambiarEstado(fila.numeroFila,silla.numerSilla,silla.estado )}"
 								 ajax="true" update="@form">
-								<h:graphicImage value="resources/images/diponible.png" width="25" height="25"
+								<h:graphicImage value="resources/images/disponible.png" width="25" height="25"
 									rendered="#{silla.estado eq 'VACIO'}" title="Fila No. #{fila.numeroFila} #{silla.infoBasica}" />
 								<h:graphicImage value="resources/images/ocupada.png" width="25" height="25"
 									rendered="#{silla.estado eq 'OCUPADO'}" title="Fila No. #{fila.numeroFila} #{ silla.infoBasica}" />

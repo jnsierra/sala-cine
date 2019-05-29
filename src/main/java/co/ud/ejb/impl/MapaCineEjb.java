@@ -14,11 +14,11 @@ import co.ud.enumeracion.ESTADO_UBICACION;
 
 @Singleton
 @Startup
-public class MapaCineEjb implements IMapaCineEjb{
+public class MapaCineEjb implements IMapaCineEjb {
 
 	private SalaCineEntity sala;
 	private final static Logger log = Logger.getLogger(MapaCineEjb.class.getName());
-	
+
 	@PostConstruct
 	public void init() {
 		log.info(".::  Se inicializa el objeto sala de cine ::.");
@@ -29,22 +29,30 @@ public class MapaCineEjb implements IMapaCineEjb{
 	public SalaCineEntity obtieneSala() {
 		return sala;
 	}
+
 	/**
 	 * Metodo con el cual cambio de estado la silla
+	 * 
 	 * @param fila
 	 * @param silla
 	 */
 	@Lock(LockType.WRITE)
-	public void cambiaEstadoSilla(Long fila, Long silla, String cliente, String usuario) {
-		ESTADO_UBICACION estadoActual = sala.getFilas().get(fila.intValue()).getSillas().get(silla.intValue()).getEstado();
-		sala.getFilas().get(fila.intValue()).getSillas().get(silla.intValue()).setCliente(cliente);
-		sala.getFilas().get(fila.intValue()).getSillas().get(silla.intValue()).setUsuarioRes(usuario);
-		if(estadoActual.equals(ESTADO_UBICACION.VACIO)) {
-			sala.getFilas().get(fila.intValue()).getSillas().get(silla.intValue()).setEstado(ESTADO_UBICACION.OCUPADO);
-		}else if(estadoActual.equals(ESTADO_UBICACION.OCUPADO)) {
-			sala.getFilas().get(fila.intValue()).getSillas().get(silla.intValue()).setEstado(ESTADO_UBICACION.RESERVADO);
-		}else if(estadoActual.equals(ESTADO_UBICACION.RESERVADO)) {
-			sala.getFilas().get(fila.intValue()).getSillas().get(silla.intValue()).setEstado(ESTADO_UBICACION.VACIO);
+	public void cambiaEstadoSilla(Long fila, Long silla, String cliente, String usuario, Integer asientos) {
+		ESTADO_UBICACION estadoActual = sala.getFilas().get(fila.intValue()).getSillas().get(silla.intValue())
+				.getEstado();
+		for (int i = 0; i < asientos; i++) {
+			sala.getFilas().get(fila.intValue()).getSillas().get(silla.intValue() + i).setCliente(cliente);
+			sala.getFilas().get(fila.intValue()).getSillas().get(silla.intValue() + i).setUsuarioRes(usuario);
+			if (estadoActual.equals(ESTADO_UBICACION.VACIO)) {
+				sala.getFilas().get(fila.intValue()).getSillas().get(silla.intValue() + i)
+						.setEstado(ESTADO_UBICACION.OCUPADO);
+			} else if (estadoActual.equals(ESTADO_UBICACION.OCUPADO)) {
+				sala.getFilas().get(fila.intValue()).getSillas().get(silla.intValue() + i)
+						.setEstado(ESTADO_UBICACION.RESERVADO);
+			} else if (estadoActual.equals(ESTADO_UBICACION.RESERVADO)) {
+				sala.getFilas().get(fila.intValue()).getSillas().get(silla.intValue() + i)
+						.setEstado(ESTADO_UBICACION.VACIO);
+			}
 		}
 	}
 }
